@@ -1,0 +1,30 @@
+title Exercise 0.6
+
+browser->server: HTTP GET studies.cs.helsinki.fi/exampleapp/spa
+server->browser: HTML-code
+browser->server: HTTP GET main.css
+server->browser: main.css
+browser->server: HTTP GET spa.js
+server->browser: spa.js
+
+note over browser:
+js-code executes
+then requests JSON-data
+end note
+
+browser->server: HTTP GET data.json
+server->browser: data.json
+
+note over browser:
+user enters new note
+clicks submit
+end note
+
+browser->server: HTTP POST studies.cs.helsinki.fi/exampleapp/new_note_spa
+server->browser: STATUS CODE 201(stays on page using js-code, no rerender(AJAX))
+
+note over browser:
+browser executes eventhandler
+eventhandler rerenders new note to page
+sends note as JSON-data back to server
+end note

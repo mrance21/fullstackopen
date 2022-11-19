@@ -18,12 +18,12 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
-  const [votes, setVotes] = useState(new Array(7).fill(0))
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
   const copyVotes = [...votes]
 
   const handleVotes = () => setVotes(copyVotes, copyVotes[selected] += 1)
-  const handleSelected = () => setSelected(Math.floor(Math.random() * 7))
+  const handleSelected = () => setSelected(Math.floor(Math.random() * anecdotes.length))
 
   return (
     <div>

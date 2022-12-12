@@ -1,4 +1,4 @@
-const Contacts = ({persons, term}) => {
+const Contacts = ({persons, term, removeContact}) => {
    /* Filtering the persons array based on the term. */
     const searchResults = !term
     ? persons
@@ -6,7 +6,8 @@ const Contacts = ({persons, term}) => {
   
     return (
       <ul>
-        {searchResults.map(person => <li key={person.id}>{person.name} {person.number}</li>)}
+        {searchResults.map(person => <li className="contact" key={person.id}>{person.name} {person.number} 
+        <button onClick={() => removeContact(person.id)}>Delete</button></li>)}
       </ul>
     )
   }

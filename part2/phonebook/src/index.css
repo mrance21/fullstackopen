@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  color: blue;
+  font-style: italic;
+}
+
+.contact {
+  color: green;
+  padding-top: 3px;
+  font-size: 15px;
+}
+
+.success {
+  color: green;
+  background: lightgray;
+  font-size: 20px;
+  border-style: solid;
+  padding: 10px;
+  margin-bottom: 10px;
+}

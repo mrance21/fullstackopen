@@ -21,19 +21,19 @@
     {
       "content": "miles",
       "date": "2022-12-08T03:11:46.418Z",
-      "important": false,
+      "important": true,
       "id": 4
     },
     {
       "content": "hey bitch",
       "date": "2022-12-08T03:21:54.333Z",
-      "important": false,
+      "important": true,
       "id": 5
     },
     {
       "content": "nice",
       "date": "2022-12-08T03:22:28.364Z",
-      "important": false,
+      "important": true,
       "id": 6
     },
     {

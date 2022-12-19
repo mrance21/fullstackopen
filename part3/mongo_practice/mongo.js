@@ -2,7 +2,7 @@
 // const app = express()
 const mongoose = require('mongoose');
 
-// mongoose.set('strictQuery', true);
+mongoose.set('strictQuery', true);
 
 
 if (process.argv.length < 3) {
@@ -45,3 +45,30 @@ Note.find({}).then(result => {
     mongoose.connection.close()
 })
   .catch((err) => console.log(err))
+
+
+//   mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+
+
+  if (process.argv.length === 3) {
+    Person.find({}).then(result => {
+        result.forEach(person => {
+            console.log(person)
+        })
+        return mongoose.connection.close()
+    })
+    .catch((err) => console.log(err))
+}
+
+if (process.argv.length > 3) {
+    const person = new Person({
+        name: name,
+        number: number,
+    })
+    person.save().then(() => {
+        console.log(`added ${name} number ${number} to phonebook`)
+        console.log('note saved!')
+        return mongoose.connection.close()
+        })
+        .catch((err) => console.log(err))
+    }

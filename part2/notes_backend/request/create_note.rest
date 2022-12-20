@@ -1,19 +1,31 @@
 GET http://localhost:3001/api/notes/
 
 ###
+GET http://localhost:3001/api/notes/639fb68579f209f047552e45
+
+###
 POST http://localhost:3001/api/notes/
 Content-Type: application/json
 
 {
-    "content": "Postman is a great tool for testing a REST-api",
+    "content": "create note with Note model from DB",
     "important": "true"
 }
 
 ###
-DELETE http://localhost:3001/api/notes/
+PUT http://localhost:3001/api/notes/639fb68579f209f047552e45
+Content-Type: application/json
+
+{
+    "content": "TEST PUT",
+    "important": "false"
+}
+
+###
+DELETE http://localhost:3001/api/notes/639fb7977c3d134a06606f74
 # Content-Type: application/json
 
 # {
-#     "content": "Postman is a great tool for testing a REST-api",
+#     "content": "print this note to the console",
 #     "important": "true"
 # }

@@ -72,6 +72,12 @@ const App = () => {
             setSuccessMessage(null)
           }, 5000)
         })
+        .catch(error => {
+          // this is the way to access the error message
+          setSuccessMessage(`${error.response.data.error}`)
+          setSuccessMessage('error');
+          console.log(error.response.data.error)
+        })
     }
   }
 

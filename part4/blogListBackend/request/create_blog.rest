@@ -1,0 +1,12 @@
+GET http://localhost:3001/bloglist
+
+###
+POST  http://localhost:3001/bloglist
+Content-Type: application/json
+
+{
+  "title": "me bro",
+  "author": "james madison",
+  "url": "twitter.com",
+  "likes": "5"
+}

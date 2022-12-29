@@ -12,12 +12,12 @@ logger.info('connecting to', config.MONGODB_URI)
 mongoose.set('strictQuery', true)
 const mongoUrl = config.MONGODB_URI
 mongoose.connect(mongoUrl)
-    .then(() => {
-        logger.info('connected to Mongo DB')
-    })
-    .catch(() => {
-        logger.info("couldn't connect to Mongo DB")
-    })
+  .then(() => {
+    logger.info('connected to Mongo DB')
+  })
+  .catch(() => {
+    logger.info('couldn\'t connect to Mongo DB')
+  })
 
 app.use(cors())
 app.use(express.json())

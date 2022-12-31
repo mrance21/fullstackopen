@@ -15,14 +15,14 @@ beforeEach(async () => {
 
 test('blogs are returned as json', async () => {
   await api
-    .get('/bloglist')
+    .get('/api/blogs/')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 }, 100000)
 
 
 test('verifies unique identifier property is named id', async () => {
-  const response = await api.get('/bloglist')
+  const response = await api.get('/api/blogs/')
   console.log(response.body[0].id)
   expect(response.body[0].id).toBeDefined()
 })
@@ -39,7 +39,7 @@ test('verify POST request creates a new blog post', async () => {
   }
 
   await api
-    .post('/bloglist')
+    .post('/api/blogs/')
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -53,7 +53,7 @@ test('verify POST request creates a new blog post', async () => {
 
 
 test('http likes', async () => {
-  const responseBlogs = await api.get('/bloglist')
+  const responseBlogs = await api.get('/api/blogs/')
 
   responseBlogs.body.forEach(async (blog) => {
     if (blog.likes === undefined) {
@@ -64,6 +64,27 @@ test('http likes', async () => {
   responseBlogs.body.forEach(async (blog) => {
     await expect(blog.likes).toBeDefined()
   })
+})
+
+test('invalid users', async () => {
+  const usersAtStart = await helper.usersInDb()
+
+  const newUser = {
+    username: 'mrance35',
+    name: 'miles',
+    password: 'mick'
+  }
+
+  const result = await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  expect(result.body.error).toContain('username must be unique')
+
+  const usersAtEnd = await helper.usersInDb()
+  expect(usersAtEnd).toHaveLength(usersAtStart.length)
 })
 
 afterAll(() => {

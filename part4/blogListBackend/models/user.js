@@ -7,18 +7,18 @@ const userSchema = new mongoose.Schema({
     minLength: 3
   },
   name: String,
-  passwordHash: {
-    type: String,
-    required: true,
-    minLength: 3
-  },
-  // notes: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Note
-  //   },
-  // ]
+  passwordHash: String,
+  blogs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Blog'
+    },
+  ]
 })
+
+// if (body.password.length < 3) {
+//   response.status(400).json('password is less than 3 character')
+// }
 
 /* A function that is called when the object is converted to JSON. */
 userSchema.set('toJSON', {

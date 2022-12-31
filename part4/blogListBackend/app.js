@@ -25,7 +25,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 /* Telling the app to use the blogRouter when the url is /bloglist */
-app.use('/api/blog', blogRouter)
+app.use('/api/blogs', blogRouter)
 app.use('/api/users', usersRouter)
 
 module.exports = app

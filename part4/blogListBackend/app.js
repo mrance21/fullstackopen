@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const blogRouter = require('./controllers/blogs')
+const usersRouter = require('./controllers/users')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
@@ -24,6 +25,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 /* Telling the app to use the blogRouter when the url is /bloglist */
-app.use('/bloglist', blogRouter)
+app.use('/api/blog', blogRouter)
+app.use('/api/users', usersRouter)
 
 module.exports = app

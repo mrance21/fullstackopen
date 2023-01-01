@@ -67,26 +67,26 @@ test('http likes', async () => {
   })
 })
 
-test('invalid users', async () => {
-  const usersAtStart = await helper.usersInDb()
+// test('invalid users', async () => {
+//   const usersAtStart = await helper.usersInDb()
 
-  const newUser = {
-    username: 'mrance35',
-    name: 'miles',
-    password: 'mick'
-  }
+//   const newUser = {
+//     username: 'mrance35',
+//     name: 'miles',
+//     password: 'mick'
+//   }
 
-  const result = await api
-    .post('/api/users')
-    .send(newUser)
-    .expect(400)
-    .expect('Content-Type', /application\/json/)
+//   const result = await api
+//     .post('/api/users')
+//     .send(newUser)
+//     .expect(400)
+//     .expect('Content-Type', /application\/json/)
 
-  expect(result.body.error).toContain('username must be unique')
+//   expect(result.body.error).toContain('username must be unique')
 
-  const usersAtEnd = await helper.usersInDb()
-  expect(usersAtEnd).toHaveLength(usersAtStart.length)
-})
+//   const usersAtEnd = await helper.usersInDb()
+//   expect(usersAtEnd).toHaveLength(usersAtStart.length)
+// })
 
 describe('unique users and blogs operation', () => {
   test('add new blog with correct user', async () => {

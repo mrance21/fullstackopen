@@ -120,7 +120,10 @@ const App = (props) => {
       <Notification message={errorMessage}/>
       {user === null 
         ? loginForm()
-        : noteForm()
+        : <div>
+          <p>{user.name} logged-in</p>
+          {noteForm()}
+        </div>
       }
       <div>
         <button onClick={() => setShowAll(!showAll)}>

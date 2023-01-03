@@ -4,6 +4,7 @@ import Notification from './components/Notification'
 import Footer from './components/Footer'
 import LoginForm from './components/LoginForm'
 import NoteForm from './components/NoteForm'
+import Togglable from './components/Togglable'
 import noteService from './services/notes'
 import loginService from './services/login'
 
@@ -77,14 +78,6 @@ const App = (props) => {
     setNewNote(event.target.value)
   }
 
-  const handleUsernameChange = (target) => {
-    setUsername(target.value)
-  }
-
-  const handlePasswordChange = (target) => {
-    setPassword(target.value)
-  }
-
 
   const toggleImportance = id => {
     const note = notes.find(n => n.id === id)
@@ -117,12 +110,20 @@ const App = (props) => {
       <h1>Notes</h1>
       <Notification message={errorMessage}/>
       {user === null 
-        ? <LoginForm handleSubmit={handleSubmit} username={username} 
-        handleUsernameChange={handleUsernameChange} password={password} handlePasswordChange={handlePasswordChange}/>
+        ? <Togglable buttonLabel='login'>
+            <LoginForm 
+              handleSubmit={handleSubmit} 
+              username={username} 
+              handleUsernameChange={(target) => {setUsername(target.value)}} 
+              password={password} 
+              handlePasswordChange={(target) => {setPassword(target.value)}}/>
+          </Togglable>
         : <div>
-          <p>{user.name} logged-in</p>
-          <NoteForm addNotes={addNotes} newNote={newNote} handleNewNotes={handleNewNotes}/>
-        </div>
+            <p>{user.name} logged-in</p>
+            <Togglable buttonLabel='new Note'>
+              <NoteForm addNotes={addNotes} newNote={newNote} handleNewNotes={handleNewNotes}/>
+            </Togglable>
+          </div>
       }
       <div>
         <button onClick={() => setShowAll(!showAll)}>

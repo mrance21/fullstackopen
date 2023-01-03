@@ -17,7 +17,7 @@ const App = (props) => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const handleLogin = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     
     try {
@@ -37,6 +37,7 @@ const App = (props) => {
     }
   }
 
+
   useEffect(() => {
     noteService
       .getAll()
@@ -44,6 +45,7 @@ const App = (props) => {
         setNotes(initialNotes)
       })
   }, [])
+
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -53,6 +55,7 @@ const App = (props) => {
       noteService.setToken(user.token)
     }
   }, [])
+
 
   const addNotes = (event) => {
     event.preventDefault()
@@ -69,9 +72,19 @@ const App = (props) => {
       })
   }
 
+
   const handleNewNotes = (event) => {
     setNewNote(event.target.value)
   }
+
+  const handleUsernameChange = (target) => {
+    setUsername(target.value)
+  }
+
+  const handlePasswordChange = (target) => {
+    setPassword(target.value)
+  }
+
 
   const toggleImportance = id => {
     const note = notes.find(n => n.id === id)
@@ -98,43 +111,14 @@ const App = (props) => {
   ? notes
   : notes.filter(note => note.important === true)
 
-  // const loginForm = () => {
-  //   <form onSubmit={handleLogin}>
-  //     <div>
-  //       username
-  //         <input 
-  //         type={"text"}
-  //         value={username}
-  //         name="Username"
-  //         onChange={({ target }) => setUsername(target.value)}/>
-  //     </div>
-  //     <div>
-  //       password
-  //       <input 
-  //       type={"text"}
-  //       value={password}
-  //       name="Password"
-  //       onChange={({ target }) => setPassword(target.value)}
-  //       />
-  //     </div>
-  //     <button type='submit'>login</button>
-  //   </form>
-  // }
-
-  // const noteForm = () => {
-  //   <form onSubmit={addNotes}>
-  //     new note: <input value={newNote} onChange={handleNewNotes}/>
-  //     <button type="submit">save</button>
-  //   </form>
-  // }
 
   return (
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage}/>
       {user === null 
-        ? <LoginForm handleLogin={handleLogin} username={username} 
-        setUsername={setUsername} password={password} setPassword={setPassword}/>
+        ? <LoginForm handleSubmit={handleSubmit} username={username} 
+        handleUsernameChange={handleUsernameChange} password={password} handlePasswordChange={handlePasswordChange}/>
         : <div>
           <p>{user.name} logged-in</p>
           <NoteForm addNotes={addNotes} newNote={newNote} handleNewNotes={handleNewNotes}/>

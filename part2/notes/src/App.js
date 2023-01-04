@@ -18,6 +18,25 @@ const App = (props) => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+
+  useEffect(() => {
+    noteService
+      .getAll()
+      .then(initialNotes => {
+        setNotes(initialNotes)
+      })
+  }, [])
+
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      noteService.setToken(user.token)
+    }
+  }, [])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     
@@ -37,25 +56,6 @@ const App = (props) => {
       }, 5000)
     }
   }
-
-
-  useEffect(() => {
-    noteService
-      .getAll()
-      .then(initialNotes => {
-        setNotes(initialNotes)
-      })
-  }, [])
-
-
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      noteService.setToken(user.token)
-    }
-  }, [])
 
 
   const addNotes = (event) => {
@@ -114,9 +114,9 @@ const App = (props) => {
             <LoginForm 
               handleSubmit={handleSubmit} 
               username={username} 
-              handleUsernameChange={(target) => {setUsername(target.value)}} 
+              handleUsernameChange={({ target }) => {setUsername(target.value)}} 
               password={password} 
-              handlePasswordChange={(target) => {setPassword(target.value)}}/>
+              handlePasswordChange={({ target }) => {setPassword(target.value)}}/>
           </Togglable>
         : <div>
             <p>{user.name} logged-in</p>

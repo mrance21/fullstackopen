@@ -11,7 +11,6 @@ import loginService from './services/login'
 
 const App = (props) => {
   const [notes, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
@@ -37,7 +36,7 @@ const App = (props) => {
     }
   }, [])
 
-  const handleSubmit = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
     
     try {
@@ -57,25 +56,19 @@ const App = (props) => {
     }
   }
 
-
-  const addNotes = (event) => {
+  const handleLogout = (event) =>{
     event.preventDefault()
-    const noteObject = {
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random() > .5,
-    }
+    window.localStorage.clear()
+    window.location.reload()
+  }
+
+
+  const addNotes = (noteObject) => {
     noteService
       .create(noteObject)
       .then(returnedNote => {
         setNotes(notes.concat(returnedNote))
-        setNewNote('')
       })
-  }
-
-
-  const handleNewNotes = (event) => {
-    setNewNote(event.target.value)
   }
 
 
@@ -105,6 +98,8 @@ const App = (props) => {
   : notes.filter(note => note.important === true)
 
 
+
+
   return (
     <div>
       <h1>Notes</h1>
@@ -112,7 +107,7 @@ const App = (props) => {
       {user === null 
         ? <Togglable buttonLabel='login'>
             <LoginForm 
-              handleSubmit={handleSubmit} 
+              handleSubmit={handleLogin} 
               username={username} 
               handleUsernameChange={({ target }) => {setUsername(target.value)}} 
               password={password} 
@@ -121,8 +116,9 @@ const App = (props) => {
         : <div>
             <p>{user.name} logged-in</p>
             <Togglable buttonLabel='new Note'>
-              <NoteForm addNotes={addNotes} newNote={newNote} handleNewNotes={handleNewNotes}/>
+              <NoteForm createNote={addNotes}/>
             </Togglable>
+            <button onClick={handleLogout}>logout</button>
           </div>
       }
       <div>

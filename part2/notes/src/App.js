@@ -9,7 +9,7 @@ import noteService from './services/notes'
 import loginService from './services/login'
 
 
-const App = (props) => {
+const App = () => {
   const [notes, setNotes] = useState([])
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -38,7 +38,7 @@ const App = (props) => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       /* Logging in the user and setting the user to the state. */
       const user = await loginService.login({ username, password })
@@ -56,7 +56,7 @@ const App = (props) => {
     }
   }
 
-  const handleLogout = (event) =>{
+  const handleLogout = (event) => {
     noteFormRef.current.toggleVisibility()
     event.preventDefault()
     window.localStorage.clear()
@@ -82,6 +82,7 @@ const App = (props) => {
       .then(returnedNote => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
+      // eslint-disable-next-line no-unused-vars
       .catch(error => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
@@ -95,8 +96,8 @@ const App = (props) => {
 
 
   const notesToShow = showAll
-  ? notes
-  : notes.filter(note => note.important === true)
+    ? notes
+    : notes.filter(note => note.important === true)
 
   const noteFormRef = useRef()
 
@@ -105,22 +106,22 @@ const App = (props) => {
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage}/>
-      {user === null 
+      {user === null
         ? <Togglable buttonLabel='login'>
-            <LoginForm 
-              handleSubmit={handleLogin} 
-              username={username} 
-              handleUsernameChange={({ target }) => {setUsername(target.value)}} 
-              password={password} 
-              handlePasswordChange={({ target }) => {setPassword(target.value)}}/>
-          </Togglable>
+          <LoginForm
+            handleSubmit={handleLogin}
+            username={username}
+            handleUsernameChange={({ target }) => {setUsername(target.value)}}
+            password={password}
+            handlePasswordChange={({ target }) => {setPassword(target.value)}}/>
+        </Togglable>
         : <div>
-            <p>{user.name} logged-in</p>
-            <Togglable buttonLabel='new Note' ref={noteFormRef}>
-              <NoteForm createNote={addNotes}/>
-            </Togglable>
-            <button onClick={handleLogout}>logout</button>
-          </div>
+          <p>{user.name} logged-in</p>
+          <Togglable buttonLabel='new Note' ref={noteFormRef}>
+            <NoteForm createNote={addNotes}/>
+          </Togglable>
+          <button onClick={handleLogout}>logout</button>
+        </div>
       }
       <div>
         <button onClick={() => setShowAll(!showAll)}>
@@ -130,7 +131,7 @@ const App = (props) => {
       <ul>
         {notesToShow.map(note => <Note key={note.id} note={note} toggleImportance={() => toggleImportance(note.id)} />)}
       </ul>
-      
+
       <Footer />
     </div>
   )

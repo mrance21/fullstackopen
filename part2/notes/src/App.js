@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
@@ -57,6 +57,7 @@ const App = (props) => {
   }
 
   const handleLogout = (event) =>{
+    noteFormRef.current.toggleVisibility()
     event.preventDefault()
     window.localStorage.clear()
     window.location.reload()
@@ -97,6 +98,8 @@ const App = (props) => {
   ? notes
   : notes.filter(note => note.important === true)
 
+  const noteFormRef = useRef()
+
 
   return (
     <div>
@@ -113,7 +116,7 @@ const App = (props) => {
           </Togglable>
         : <div>
             <p>{user.name} logged-in</p>
-            <Togglable buttonLabel='new Note'>
+            <Togglable buttonLabel='new Note' ref={noteFormRef}>
               <NoteForm createNote={addNotes}/>
             </Togglable>
             <button onClick={handleLogout}>logout</button>

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 
-const Togglable = (props) => {
+/* `forwardRef` is a function that is used to pass a ref to a component. */
+const Togglable = forwardRef((props, refs) => {
 /* A hook that is used to set the state of the component. */
   const [visible, setVisible] = useState(false)
 /* Setting the display property of the div to none if the value of visible is false. */
@@ -17,6 +18,13 @@ const Togglable = (props) => {
     setVisible(!visible)
   }
 
+  /* A hook that is used to expose methods and properties of the component to the parent component. */
+  useImperativeHandle(refs, () => {
+    return {
+      toggleVisibility
+    }
+  })
+
   return (
     /* A component that renders a button and a div. The div is hidden by default and is shown when the
     button is clicked. */
@@ -30,10 +38,7 @@ const Togglable = (props) => {
       </div>
     </div>
   )
-
-
-
-}
+})
 
 
 

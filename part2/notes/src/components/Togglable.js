@@ -3,8 +3,6 @@ import { useState } from "react";
 const Togglable = (props) => {
 /* A hook that is used to set the state of the component. */
   const [visible, setVisible] = useState(false)
-  console.log(visible)
-
 /* Setting the display property of the div to none if the value of visible is false. */
   const hideWhenVisible = {display: visible ? 'none' : ''}
 /* Setting the display property of the div to none if the value of visible is false. */

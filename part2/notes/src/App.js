@@ -98,8 +98,6 @@ const App = (props) => {
   : notes.filter(note => note.important === true)
 
 
-
-
   return (
     <div>
       <h1>Notes</h1>

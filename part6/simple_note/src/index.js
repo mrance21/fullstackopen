@@ -3,57 +3,33 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import { createNote } from './reducers/noteReducer'
+import { filterChange } from './reducers/filterReducer'
+
 import noteReducer from './reducers/noteReducer';
+import filterReducer from './reducers/filterReducer';
 
-const store = configureStore({reducer: noteReducer})
-
-store.dispatch({
-  type: 'NEW_NOTE',
-  data: {
-    content: 'the app state is in redux store',
-    important: true,
-    id: 1
-  }
+const reducer = combineReducers({
+  notes: noteReducer,
+  filter: filterReducer
 })
 
-store.dispatch({
-  type: 'NEW_NOTE',
-  data: {
-    content: 'state changes are made with actions',
-    important: false,
-    id: 2
-  }
-})
-
-const createNote = (content) => {
-  return {
-    type: 'NEW_NOTE',
-    data: {
-      content,
-      important: false,
-      id: generateId()
-    }
-  }
-}
-
-const toggleImportanceOf = (id) => {
-  return {
-    type: 'TOGGLE_IMPORTANCE',
-    data: { id }
-  }
-}
-
-const generateId = () =>
-  Number((Math.random() * 1000000).toFixed(0))
+const store = configureStore({reducer: reducer})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+/* A component that makes the store available to all components in the application. */
   <Provider store={store}>
     <App />
   </Provider>
 );
+
+store.subscribe(() => console.log(store.getState()))
+store.dispatch(filterChange('IMPORTANT'))
+store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

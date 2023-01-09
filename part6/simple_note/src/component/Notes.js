@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleImportanceOf } from '../reducers/noteReducer'
 
-const Note = ({ note, handleClick }) => {
+const Note = ({ note, handleClick, key }) => {
   return(
-    <li onClick={handleClick}>
+    <li onClick={handleClick} key={key}>
       {note.content} 
       <strong> {note.important ? 'important' : ''}</strong>
     </li>
@@ -12,7 +12,8 @@ const Note = ({ note, handleClick }) => {
 
 const Notes = () => {
   const dispatch = useDispatch()
-  const notes = useSelector(state => state)
+/* A hook that is used to get the state from the store. */
+  const notes = useSelector(state => state.notes)
 
   return(
     <ul>

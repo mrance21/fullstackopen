@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleImportanceOf } from '../reducers/noteReducer'
 
-const Note = ({ note, handleClick, key }) => {
+const Note = ({ note, handleClick }) => {
   return(
-    <li onClick={handleClick} key={key}>
+    <li onClick={handleClick}>
       {note.content} 
       <strong> {note.important ? 'important' : ''}</strong>
     </li>
@@ -12,8 +12,14 @@ const Note = ({ note, handleClick, key }) => {
 
 const Notes = () => {
   const dispatch = useDispatch()
-/* A hook that is used to get the state from the store. */
-  const notes = useSelector(state => state.notes)
+  const notes = useSelector(({ filter, notes }) => {
+    if ( filter === 'ALL' ) {
+      return notes
+    }
+    return filter  === 'IMPORTANT' 
+      ? notes.filter(note => note.important)
+      : notes.filter(note => !note.important)
+  })
 
   return(
     <ul>
@@ -29,5 +35,4 @@ const Notes = () => {
     </ul>
   )
 }
-
 export default Notes
